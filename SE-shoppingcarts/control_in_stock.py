@@ -1,5 +1,9 @@
 #!/usr/bin/python3
 from dbConfig import conn, cur
+def delStock(id):
+    sql = "DELETE FROM `product` WHERE `product`.`id` = %s"
+    cur.execute(sql,(id,))
+    conn.commit()
 def addProduct(name, price, amount):
     if(name == None or price == None or amount == None):
         return False

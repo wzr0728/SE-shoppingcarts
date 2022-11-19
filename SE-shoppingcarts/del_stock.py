@@ -15,21 +15,12 @@ print("""
 </head>
 <body>
 """)
-goodsList = control_in_stock.getList()
 form = cgi.FieldStorage()
-
-for i in range(goodsList[len(goodsList)-1][0]):
-    i += 1
-    id_amount = form.getvalue(f'amount_{i}')
-    id_price = form.getvalue(f'price_{i}')
-    id_name = form.getvalue(f'name_{i}')
-    control_in_stock.changeStock(id_amount, i)
-    control_in_stock.changePrice(id_price, i)
-    control_in_stock.changeName(id_name, i)
-
+id = form.getvalue('i')
+control_in_stock.delStock(id)
     
     
-print("修改完成")
+print("刪除完成")
 print("<br><a href='root.py'>查看管理頁面</a>")
 print("<br><a href='orderList.py'>查看訂單</a>")
 print("</body></html>")

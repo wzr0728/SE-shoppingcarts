@@ -7,10 +7,10 @@ def changeCart(amount, id):
         sql = "DELETE FROM `Usercart` WHERE `Usercart`.`id` = %s;"
         cur.execute(sql,(id,))
         conn.commit()
-    else:
-        sql = "update Usercart set amount=%s where id=%s;"
-        cur.execute(sql,(amount,id))
-        conn.commit()
+    
+    sql = "update Usercart set amount=%s where id=%s;"
+    cur.execute(sql,(amount,id))
+    conn.commit()
     return True
 
 def purchase():
