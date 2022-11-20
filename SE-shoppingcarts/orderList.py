@@ -10,8 +10,41 @@ goodsList = control_in_stock.getList()
 ordersList = control_order.getList()
 pos = 0
 allPrice = 0
-msg = """<form name="表單" method="post" action="shipping.py"> </p>"""
+dataPrice = []
+dataOiD = []
 for (OiD, UiD, PiD, amount, status) in ordersList:
+    if(pos == 0):
+        pos = OiD
+    elif(pos != OiD):
+        dataPrice.append(allPrice)
+        dataOiD.append(pos)
+        allPrice = 0
+        pos = OiD
+    name, price, stock = control_in_stock.searchProduct(PiD)
+    allPrice+=price*amount
+dataPrice.append(allPrice)
+dataOiD.append(pos)
+
+for i in range(1, len(dataPrice)):  # 由第二張開始排序
+    tmp = dataPrice[i]  # tmp為要插入的值
+    tmpid = dataOiD[i]
+    index = i  # index為該插入值的位置
+    while (dataPrice[index - 1] > tmp and index > 0):  # 只要發現我所在的值前面的數比較大 就進行插入
+        dataOiD[index] = dataOiD[index-1]
+        dataPrice[index] = dataPrice[index - 1]  # 往前移動
+        index = index - 1  # 往前比較
+    dataPrice[index] = tmp
+    dataOiD[index] = tmpid
+dataOiD.reverse()  
+sorting = []
+for i in dataOiD:
+    for (OiD, UiD, PiD, amount, status) in ordersList:
+        if(OiD == i):
+            sorting.append([OiD, UiD, PiD, amount, status])
+pos = 0
+allPrice = 0
+msg = """<form name="表單" method="post" action="shipping.py"> </p>"""
+for (OiD, UiD, PiD, amount, status) in sorting:
     if(pos == 0):
         pos = OiD
         msg += f"以下為{OiD}, {UiD} 的訂單</p>"

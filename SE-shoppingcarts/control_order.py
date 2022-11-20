@@ -7,7 +7,7 @@ def getList():
     records = cur.fetchall()
     return records
 def shipping(id):
-    sql = "select OiD, status from orderlist where OiD=%s;"
+    sql = "select OiD, status from orderlist where OiD=%s ;"
     cur.execute(sql,(id,))
     records = cur.fetchall()
     if(records == []):
